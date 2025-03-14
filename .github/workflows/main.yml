@@ -1,0 +1,13 @@
+name: como usar variaves de ambiente
+on:
+  workflow_dispatch:
+env:
+  ENV_WORKFLOW: "Valor WORKFLOW"
+jobs:
+  env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execução
+        run: |
+          echo "Valor CPTO"
+    
