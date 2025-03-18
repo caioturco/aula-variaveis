@@ -1,46 +1,39 @@
-name: Como usar variavel de ambiente e contexto do GitHub Actions
-on: 
-    push:
-        branches: [main]
-env:
-  ENV_WORKFLOW: "Valor WORKFLOW"
+name: Exemplo Input
+run-name: Exemplo workflow para inputm, executado por ${{ github.actor }}
+on:
+    workflow_dispatch:
+        inputs:
+            versao:
+                type: string
+                required: true
+                default: "dev"
+                description: "Versão da nova release"
+            numero_card:
+                type: number
+                required: true
+                description: "Numero do card da tarefa deste commit"
+            fazer_deploy:
+                type: boolean
+                required: true
+                description: "Especifica se deve ou não realizar o deploy"
+            ambiente:
+                type: choice
+                required: true
+                description: "Ambiente de Deploy"
+                options:
+                    - Dev
+                    - HML
+                    - PRD
 jobs:
-  contextos:
-    runs-on: ubuntu-latest
-    env:
-        ENV_JOB: "Valor JOB CONTEXT"
-    steps:
-      - name: Contexto github
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Contexto env
-        env:
-          ENV_CONTEXT: ${{ toJson(env) }}
-        run: echo "$ENV_CONTEXT"
-      - name: Contexto job
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Contexto steps
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Contexto runner
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Contexto vars
-        env:
-          RUNNER_VARS: ${{ toJson(vars) }}
-        run: echo "$RUNNER_VARS"
-      - name: Contexto vars
-        env:
-          RUNNER_VARS: ${{ toJson(vars) }}
-        run: echo "${{ vars.VARS_CONTEXT }}"
-      - name: Contexto Secrets
-        env:
-          RUNNER_SECRETS: ${{ toJson(secrets) }}
-        run: echo "$RUNNER_SECRETS"
-      - name: Contexto Secrets
-        run : echo ${{ secrets.SECRETS_CONTEXT }}
+    valores_input:
+        runs-on: ubunt-latest
+        steps:
+            - name: Exibindo o contexto de  input completo
+              run: echo "${{ toJson(inputs)}}"
+            - name: Exibibindo os valores individualmente
+              run: |
+                echo: "Esses são os valores repassados nos inputs"
+                echo: "A versão é ${{ inputs.versao}}"  
+                echo: "O Card é ${{ inputs.numero_card}}"
+                echo: "Deve fazer deploy ${{ inputs.fazer_deploy}}"
+                echo: "O ambiente é ${{ inputs.ambiente}}"
