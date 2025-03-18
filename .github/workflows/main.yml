@@ -26,7 +26,7 @@ on:
                     - PRD
 jobs:
     valores_input:
-        runs-on: ubunt-latest
+        runs-on: ubuntu-latest
         steps:
             - name: Exibindo o contexto de  input completo
               run: echo "${{ toJson(inputs)}}"
