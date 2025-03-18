@@ -37,4 +37,4 @@ jobs:
       - name: Contexto vars
         env:
           RUNNER_VARS: ${{ toJson(vars) }}
-        run: echo "${{ var.VARS_CONTEXT }}"
+        run: echo "${{ vars.VARS_CONTEXT }}"
